@@ -17,7 +17,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
 
   getEmployees(): Observable<Employees[]> {
-    return this.http.get<Employees[]>(this.employeesUrl).pipe(
+    return this.http.get<Employees[]>(this.employeesUrl, this.httpOptions).pipe(
       tap((_) => this.log('fetched employees')),
       catchError(this.handleError<Employees[]>('getEmployees', []))
     );
@@ -35,7 +35,7 @@ export class EmployeeService {
 
   getEmployee(id: number): Observable<Employees> {
     const url = `${this.employeesUrl}/${id}`;
-    return this.http.get<Employees>(url).pipe(
+    return this.http.get<Employees>(url, this.httpOptions).pipe(
       tap((_) => this.log(`fetched Employee id: ${id}`)),
       catchError(this.handleError<Employees>(`get Employee id: ${id}`))
     );

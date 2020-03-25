@@ -7,16 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'Angular Employees';
-  showSpinner = false;
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  loadData() {
-    this.showSpinner = true;
-    setTimeout(() => {
-      this.showSpinner = false;
-    }, 4000);
-  }
 }
