@@ -1,0 +1,47 @@
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import { Employees } from '../interfaces/Employees';
+@Injectable({
+  providedIn: 'root',
+})
+export class EmployeeService {
+  private employeesUrl = 'https://jsonplaceholder.typicode.com/users';
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  constructor(private http: HttpClient) {}
+
+  getEmployees(): Observable<Employees[]> {
+    return this.http.get<Employees[]>(this.employeesUrl).pipe(
+      tap((_) => this.log('fetched employees')),
+      catchError(this.handleError<Employees[]>('getEmployees', []))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+
+      this.log(`${operation} failed: ${error.message}`);
+
+      return of(result as T);
+    };
+  }
+
+  getEmployee(id: number): Observable<Employees> {
+    const url = `${this.employeesUrl}/${id}`;
+    return this.http.get<Employees>(url).pipe(
+      tap((_) => this.log(`fetched Employee id: ${id}`)),
+      catchError(this.handleError<Employees>(`get Employee id: ${id}`))
+    );
+  }
+
+  private log(message: string) {
+    console.log(`EmployeesService: ${message}`);
+  }
+}

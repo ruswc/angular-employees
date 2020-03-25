@@ -1,0 +1,17 @@
+<app-loader *ngIf="loader"></app-loader>
+
+<div class="mat-elevation-z2 list" *ngIf="employee">
+  <div class="list-title">
+    <button mat-icon-button routerLink="/employees">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+  </div>
+  <mat-list>
+    <app-detailed-mat-list-item subtitle="ID" [data]="employee.id"></app-detailed-mat-list-item>
+    <app-detailed-mat-list-item subtitle="Name" [data]="employee.name"></app-detailed-mat-list-item>
+    <app-detailed-mat-list-item subtitle="Username" [data]="employee.username"></app-detailed-mat-list-item>
+    <app-detailed-mat-list-item subtitle="Email" [data]="employee.email"></app-detailed-mat-list-item>
+    <app-detailed-mat-list-item subtitle="Phone" [data]="employee.phone"></app-detailed-mat-list-item>
+    <app-detailed-mat-list-item subtitle="Website" [data]="employee.website"></app-detailed-mat-list-item>
+  </mat-list>
+</div>
